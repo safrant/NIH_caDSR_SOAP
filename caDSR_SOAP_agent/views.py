@@ -1,5 +1,6 @@
 import os
-from django.http import HttpResponse
+import subprocess
+from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from forms_static import adrenal
@@ -38,6 +39,8 @@ def wsdl(request):
 def form_as_XML(request):
     #import pdb; pdb.set_trace()
 
+    os.system('sh /Users/safrant/NIH_caDSR_SOAP/NIH_caDSR_SOAP/caDSR_SOAP_agent/run.sh')
+
     formID = 0 #request.RetrieveFormRequest.workflow.formID
     valid_forms = forms.keys()
     
@@ -50,6 +53,7 @@ def form_as_XML(request):
 
 def form_as_XML_HTTP(request):
 
+    os.system('sh /Users/safrant/NIH_caDSR_SOAP/NIH_caDSR_SOAP/caDSR_SOAP_agent/run.sh')
     formID = request.GET['formID']
     valid_forms = forms.keys()
     
