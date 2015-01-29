@@ -48,18 +48,6 @@ def form_as_XML(request):
       return SimpleXMLElement('<?xml version="1.0"?><error>There was an error \
                                      delivering your request</error>')
 
-def form_as_XML_HTTP(request):
-
-    formID = request.GET['formID']
-    valid_forms = forms.keys()
-    
-    if formID in valid_forms:
-      form_xml = forms[formID]
-      return HttpResponse(form_xml)
-    else:
-      return HttpResponse('<?xml version="1.0"?><error>There was an error \
-                                     delivering your request</error>')
-
 
 host_location = server_url
 # the location and action values were the same in the example provided
@@ -72,24 +60,28 @@ dispatcher = SoapDispatcher(
     location = host_location,
     action = host_action,
     namespace = "http://nlm.nih.gov/sdc/form",
-    prefix="ns0",
+    prefix="soap12",
     ns = "urn:ihe:iti:rfd:2007")
 
 # register func
-dispatcher.register_function('soap', form_as_XML,
+dispatcher.register_function('RetreiveFormRequest', form_as_XML,
     returns={'FormResult': str},
-    args={'formID': str})
-
-dispatcher.register_function('soap2', form_as_XML_HTTP,
-    returns={'FormResult': str},
-    args={'formID': str})
+    args={'prepopData': str,
+          'workflowData': {'formID': str,
+                           'encodedResponse': str, 
+                           'archiveURL': str, 
+                           'context': str, 
+                           'instanceID': str,} 
+                           })
 
 #delete for csrf the POST for this view
 @csrf_exempt
 def dispatcher_handler(request):
     if request.method == "POST":
-        response = HttpResponse(dispatcher.dispatch(request.body))
+        response = HttpResponse()
+        response.write(dispatcher.dispatch(request.raw_post_data))
     else:
-        response = HttpResponse(dispatcher.wsdl())
+        response = HttpResponse()
+        response.write(dispatcher.wsdl())
     response['Content-length'] = str(len(response.content))
     return response
