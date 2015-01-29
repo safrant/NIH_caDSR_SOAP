@@ -1,0 +1,17 @@
+# Compiled source #
+##################
+*.pyc
+
+# Logs #
+########
+*.log
+sender-log
+
+# Certificates #
+###############
+*.keystore
+
+# Local Configure #
+##################
+local_settings.py
+tests_local.py
