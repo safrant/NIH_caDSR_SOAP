@@ -1,6 +1,8 @@
 # Compiled source #
 ##################
 *.pyc
+settings.pyc
+__init__.pyc
 
 # Logs #
 ########
