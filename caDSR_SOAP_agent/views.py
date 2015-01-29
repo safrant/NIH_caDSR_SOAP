@@ -50,6 +50,7 @@ def form_as_XML(request):
       return SimpleXMLElement('<?xml version="1.0"?><error>There was an error \
                                      delivering your request</error>')
 
+<<<<<<< HEAD
 def form_as_XML_HTTP(request):
 
     os.system('sh /Users/user/NIH_caDSR_SOAP/NIH_caDSR_SOAP/caDSR_SOAP_agent/run.sh')
@@ -62,6 +63,8 @@ def form_as_XML_HTTP(request):
     else:
       return HttpResponse('<?xml version="1.0"?><error>There was an error \
                                      delivering your request</error>')
+=======
+>>>>>>> FETCH_HEAD
 
 host_location = server_url
 # the location and action values were the same in the example provided
@@ -77,6 +80,7 @@ dispatcher = SoapDispatcher(
     prefix="soap12",
     ns = "urn:ihe:iti:rfd:2007")
 
+<<<<<<< HEAD
 # register func# register func
 dispatcher.register_function('RetrieveFormRequest', form_as_XML,
     returns={'FormResult': str},
@@ -88,6 +92,18 @@ dispatcher.register_function('RetrieveFormRequest', form_as_XML,
           'instanceID': str,}
           })
 
+=======
+# register func
+dispatcher.register_function('RetreiveFormRequest', form_as_XML,
+    returns={'FormResult': str},
+    args={'prepopData': str,
+          'workflowData': {'formID': str,
+                           'encodedResponse': str, 
+                           'archiveURL': str, 
+                           'context': str, 
+                           'instanceID': str,} 
+                           })
+>>>>>>> FETCH_HEAD
 
 #delete for csrf the POST for this view
 @csrf_exempt
