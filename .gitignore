@@ -17,3 +17,7 @@ sender-log
 ##################
 local_settings.py
 tests_local.py
+
+# Database #
+############
+db.sql*
